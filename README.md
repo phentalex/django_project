@@ -1,6 +1,6 @@
 # Сервис заявок
 
-Веб-приложение на Django для приёма и просмотра клиентских заявок. Позволяет создавать заявки через форму, просматривать список с поиском и пагинацией, открывать карточку заявки и менять её статус. Развёртывание — Docker Compose.
+Веб-приложение на Django для приёма и просмотра клиентских заявок. Позволяет создавать заявки через форму, просматривать список с поиском и пагинацией, открывать карточку заявки и менять её статус.
 
 ## Возможности
 
@@ -32,8 +32,8 @@ ALLOWED_HOSTS=127.0.0.1,localhost
 ## Запуск локально через Docker
 
 ```
-git clone https://github.com/phentalex/<repo>.git
-cd <repo>
+git clone https://github.com/phentalex/django_project.git
+cd django_project
 docker compose up --build -d
 docker compose exec web python manage.py migrate
 docker compose exec web python manage.py createsuperuser
@@ -46,8 +46,8 @@ docker compose exec web python manage.py createsuperuser
 **Linux/macOS:**
 
 ```
-git clone https://github.com/phentalex/<repo>.git
-cd <repo>
+git clone https://github.com/phentalex/django_project.git
+cd django_project
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
@@ -59,8 +59,8 @@ python3 manage.py runserver
 **Windows:**
 
 ```
-git clone https://github.com/phentalex/<repo>.git
-cd <repo>
+git clone https://github.com/phentalex/django_project.git
+cd django_project
 python -m venv venv
 source venv/Scripts/activate
 pip install -r requirements.txt
