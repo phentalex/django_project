@@ -20,4 +20,15 @@ class RequestForm(forms.ModelForm):
     def clean_phone(self):
         phone = self.cleaned_data['phone']
         digits = re.sub(r'\D', '', phone)
+        if len(digits) != 11:
+            raise forms.ValidationError('Введите корректный номер телефона')
         return digits
+
+
+class RequestStatusForm(forms.ModelForm):
+    class Meta:
+        model = Request
+        fields = ('status',)
+        widgets = {
+            'status': forms.Select(attrs={'class': 'form-select'}),
+        }

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Заявка №{{ request_obj.pk }}{% endblock %}
+
+{% block content %}
+	<h1 class="mb-4"Заявка №{{ request_obj.pk }}></h1>
+
+	<div class="row justify-content-center">
+		<div class="col-md-5">
+			<div class="card">
+				<div class="card-body">
+					<dl class="row">
+						<dt class="col-sm-3">Имя клиента</dt>
+						<dd class=col-sm-9>{{ request_obj.client_name}}</dd>
+					
+						<dt class="col-sm-3">Телефон</dt>
+  		      <dd class="col-sm-9">{{ request_obj.phone }}</dd>
+					
+  		      <dt class="col-sm-3">Email</dt>
+  		      <dd class="col-sm-9">{{ request_obj.email }}</dd>
+					
+  		      <dt class="col-sm-3">Тема</dt>
+  		      <dd class="col-sm-9">{{ request_obj.title }}</dd>
+					
+  		      <dt class="col-sm-3">Текст</dt>
+  		      <dd class="col-sm-9">{{ request_obj.text }}</dd>
+					
+  		      <dt class="col-sm-3">Статус</dt>
+  		      <dd class="col-sm-7">
+							<form method="post" class="d-flex gap-2">
+								{% csrf_token %}
+								{{ status_form.status }}
+								<button type="submit" class="btn btn-primary ms-3">Сохранить</button>
+							</form>
+						</dd>
+					
+  		      <dt class="col-sm-3">Дата создания</dt>
+  		      <dd class="col-sm-9">{{ request_obj.created_at|date:"d.m.Y H:i" }}</dd>
+  		    </dl>
+  		  </div>
+  		</div>
+
+			<div class="d-grid">
+				<a href="{% url 'applications:request_list' %}" class="btn btn-secondary mt-3">Назад</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}
