@@ -2,6 +2,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView
 
+from applications.constants import PAGINATION_LIMIT
 from applications.forms import RequestForm
 from applications.models import Request
 
@@ -10,6 +11,7 @@ class RequestListView(ListView):
     queryset = Request.objects.defer('text')
     template_name = 'applications/requests.html'
     context_object_name = 'requests'
+    paginate_by = PAGINATION_LIMIT
 
 
 class RequestCreateView(SuccessMessageMixin, CreateView):

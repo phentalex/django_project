@@ -1,14 +1,24 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}Список заявок{% endblock %}
+{% block title %}Заявки — список обращений клиентов{% endblock %}
+{% block meta_description %}Список клиентских заявок с поиском и фильтрацией: имя, телефон, email, тема обращения, статус и дата создания.{% endblock %}
 
 {% block content %}
 	<div class="text-center">
-		<h1 class="mb-4">Заявки</h1>
+  		<h1 class="mb-0">Заявки</h1>
+	</div>
+	<div class="mt-4">
 	</div>
 
+
+	<div class="mb-3">
+		<div class="col-md-4">
+			<input type="text" id="searchInput" class="form-control" placeholder="Поиск по имени/телефону/почте">
+		</div>
+	</div>
   <div class="table-responsive">
-    <table class="table table-striped table-hover align-middle">
+    <table id="requestsTable" class="table table-striped table-hover align-middle text-center">
       <thead>
         <tr>
           <th>Имя клиента</th>
@@ -26,7 +36,15 @@
             <td>{{ req.phone }}</td>
             <td>{{ req.email }}</td>
             <td>{{ req.title }}</td>
-            <td class="">{{ req.get_status_display }}</td>
+            <td>
+							{% if req.status == 'new' %}
+								<span class="status-badge badge rounded-pill px-3 py-2  bg-primary-subtle text-primary-emphasis border border-primary-subtle">{{ req.get_status_display }}</span>
+							{% elif req.status == 'in_progress' %}
+								<span class="status-badge badge rounded-pill px-3 py-2 bg-warning-subtle text-primary-emphasis border border-warning-subtle">{{ req.get_status_display }}</span>
+							{% else %}
+								<span class="status-badge badge rounded-pill px-3 py-2 bg-success-subtle text-primary-emphasis border border-success-subtle">{{ req.get_status_display }}</span>
+							{% endif %}
+						</td>
             <td>{{ req.created_at|date:"d.m.Y H:i" }}</td>
           </tr>
         {% empty %}
@@ -39,4 +57,49 @@
       </tbody>
     </table>
   </div>
+	{% if is_paginated %}
+		<nav id="pagination" aria-label="Навигация по страницам" class="mt-1">
+			<ul class="pagination justify-content-center">
+				{% if page_obj.has_previous %}
+					<li class="page-item">
+						<a class="page-link" href="?page={{ page_obj.previous_page_number }}">Назад</a>
+					</li>
+				{% else %}
+					<li class="page-item disabled">
+						<span class="page-link">Назад</span>
+					</li>
+				{% endif %}
+
+				{% for num in paginator.page_range %}
+					{% if num == page_obj.number %}
+						<li class="page-item active">
+							<span class="page-link">{{ num }}</span>
+						</li>
+					{% else %}
+						<li class="page-item">
+							<a class="page-link" href=?page={{ num }}>{{ num }}</a>
+						</li>
+					{% endif %}
+				{% endfor %}
+
+				{% if page_obj.has_next %}
+					<li class="page-item">
+						<a class="page-link" href="?page={{ page_obj.next_page_number }}">Вперёд</a>
+					</li>
+				{% else %}
+					<li class="page-item disabled">
+						<span class="page-link">Вперёд</span>
+					</li>
+				{% endif %}
+			</ul>
+		</nav>
+	{% endif %}
+
+	<div class="text-center mt-5">
+		<a href={% url "applications:request_create"%} class="btn btn-primary">Создать заявку</a>
+	</div>
+{% endblock %}
+
+{% block extra_js %}
+	<script src="{% static 'js/search.js' %}"></script>
 {% endblock %}

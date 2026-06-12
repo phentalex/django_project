@@ -1,3 +1,4 @@
+{% load static %}
 {% load django_bootstrap5 %}
 <!DOCTYTPE html>
 <html lang="ru">
@@ -6,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Заявки{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}{% endblock %}">
+		<link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% bootstrap_css %}
     {% block extra_head %}{% endblock %}
   </head>
